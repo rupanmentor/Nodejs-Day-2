@@ -6,6 +6,8 @@ const products = [
   { id: 5, name: "iphone16", price: 65000 },
 ];
 
+//get all products
+
 export const getProducts = (req, res) => {
   try {
     res
@@ -14,6 +16,30 @@ export const getProducts = (req, res) => {
   } catch (error) {
     res
       .status(503)
-      .json({ message: "Cannot retrieve the products, Error in get products" });
+      .json({
+        message: "Cannot retrieve the products, Error in get all products",
+      });
+  }
+};
+
+//get single product using id
+
+export const getProductById = (req, res) => {
+  try {
+    const productId = req.params.id;
+    //console.log("product id", productId);
+    const productDetail = products.find((ele) => ele.id == productId);
+    if (!productDetail) {
+      return res.status(404).json({ message: "Product Not Found" });
+    }
+    return res
+      .status(200)
+      .json({ message: "Product retrieved successfully", data: productDetail });
+  } catch (error) {
+    res
+      .status(503)
+      .json({
+        message: "Cannot retrieve the products, Error in get product by id",
+      });
   }
 };
