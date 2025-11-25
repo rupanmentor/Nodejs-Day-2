@@ -14,11 +14,9 @@ export const getProducts = (req, res) => {
       .status(200)
       .json({ message: "Products retrieved successfully", data: products });
   } catch (error) {
-    res
-      .status(503)
-      .json({
-        message: "Cannot retrieve the products, Error in get all products",
-      });
+    res.status(503).json({
+      message: "Cannot retrieve the products, Error in get all products",
+    });
   }
 };
 
@@ -36,10 +34,30 @@ export const getProductById = (req, res) => {
       .status(200)
       .json({ message: "Product retrieved successfully", data: productDetail });
   } catch (error) {
+    res.status(503).json({
+      message: "Cannot retrieve the products, Error in get product by id",
+    });
+  }
+};
+
+// Creating a product
+
+export const createProduct = (req, res) => {
+  try {
+    const { name, price } = req.body;
+    const newProduct = {
+      id: products.length + 1,
+      name: name,
+      price: price,
+    };
+    products.push(newProduct);
+
     res
-      .status(503)
-      .json({
-        message: "Cannot retrieve the products, Error in get product by id",
-      });
+      .status(200)
+      .json({ message: "Product Created Successfully", data: newProduct });
+  } catch (error) {
+    res.status(503).json({
+      message: "Cannot create the product, Error in create product",
+    });
   }
 };
