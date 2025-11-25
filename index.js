@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import productRoute from "./Routers/productRoute.js";
 
 //dotenv config
 
@@ -21,6 +22,10 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.status(200).send("Welcome to Backend");
 });
+
+//custom routes
+
+app.use("/api/products", productRoute);
 
 //port
 
