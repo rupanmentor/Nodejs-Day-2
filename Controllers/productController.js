@@ -74,15 +74,31 @@ export const updateProduct = (req, res) => {
     }
     products[index].name = name;
     products[index].price = price;
-    res
-      .status(200)
-      .json({
-        message: "Products Updated Successfully",
-        data: products[index],
-      });
+    res.status(200).json({
+      message: "Products Updated Successfully",
+      data: products[index],
+    });
   } catch (error) {
     res.status(503).json({
       message: "Cannot update the product, Error in update product",
+    });
+  }
+};
+
+//Delete Product
+
+export const deleteProduct = (req, res) => {
+  try {
+    const productId = req.params.id;
+    const index = products.findIndex((ele) => ele.id == productId);
+    if (index === -1) {
+      return res.status(404).json({ message: "Product Not Found" });
+    }
+    products.splice(index, 1);
+    res.status(200).json({ message: "Product Deleted Successfully" });
+  } catch (error) {
+    res.status(503).json({
+      message: "Cannot delete the product, Error in delete product",
     });
   }
 };
